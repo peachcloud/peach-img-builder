@@ -45,5 +45,5 @@ exit 0;
 sub logger {
     my ($prio, $msg) = @_;
     system('/bin/logger', '-p', "daemon.$prio",
-	   '-t', 'set-sysconf', $msg);
+	   '-t', 'rpi-set-sysconf', $msg);
 }

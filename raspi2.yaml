@@ -94,11 +94,11 @@ steps:
 
       install -m 644 -o root -g root eth0 "${ROOT?}/etc/network/interfaces.d/eth0"
 
-      install -m 755 -o root -g root set-sysconf "${ROOT?}/usr/local/sbin/set-sysconf"
-      install -m 644 -o root -g root set-sysconf.service "${ROOT?}/etc/systemd/system"
+      install -m 755 -o root -g root rpi-set-sysconf "${ROOT?}/usr/local/sbin/rpi-set-sysconf"
+      install -m 644 -o root -g root rpi-set-sysconf.service "${ROOT?}/etc/systemd/system"
       install -m 644 -o root -g root sysconf.txt "${ROOT?}/boot/firmware/sysconf.txt"
       mkdir -p "${ROOT?}/etc/systemd/system/basic.target.requires/"
-      ln -s /etc/systemd/system/set-sysconf.service "${ROOT?}/etc/systemd/system/basic.target.requires/set-sysconf.service"
+      ln -s /etc/systemd/system/rpi-set-sysconf.service "${ROOT?}/etc/systemd/system/basic.target.requires/rpi-set-sysconf.service"
 
       install -m 755 -o root -g root rpi-resizerootfs "${ROOT?}/usr/sbin/rpi-resizerootfs"
       install -m 644 -o root -g root rpi-resizerootfs.service "${ROOT?}/etc/systemd/system"
