@@ -94,6 +94,12 @@ steps:
 
       install -m 644 -o root -g root eth0 "${ROOT?}/etc/network/interfaces.d/eth0"
 
+      install -m 755 -o root -g root set-sysconf "${ROOT?}/usr/local/sbin/set-sysconf"
+      install -m 644 -o root -g root set-sysconf.service "${ROOT?}/etc/systemd/system"
+      install -m 644 -o root -g root sysconf.txt "${ROOT?}/boot/firmware/sysconf.txt"
+      mkdir -p "${ROOT?}/etc/systemd/system/basic.target.requires/"
+      ln -s /etc/systemd/system/set-sysconf.service "${ROOT?}/etc/systemd/system/basic.target.requires/set-sysconf.service"
+
       install -m 755 -o root -g root rpi-resizerootfs "${ROOT?}/usr/sbin/rpi-resizerootfs"
       install -m 644 -o root -g root rpi-resizerootfs.service "${ROOT?}/etc/systemd/system"
       mkdir -p "${ROOT?}/etc/systemd/system/systemd-remount-fs.service.requires/"
@@ -105,11 +111,6 @@ steps:
       rm -f ${ROOT?}/etc/ssh/ssh_host_*_key*
 
       wget https://github.com/raspberrypi/firmware/blob/master/boot/bcm2709-rpi-2-b.dtb    -O "${ROOT?}/boot/bcm2708-rpi-2-b.dtb"
-
-      cat >> "${ROOT?}/etc/motd" <<'EOT'
-
-      Please change the root password by running passwd
-      EOT
     root-fs: /
 
   # Clean up archive cache (likely not useful) and lists (likely outdated) to
