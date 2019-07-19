@@ -1,0 +1,19 @@
+# This file will be automatically evaluated and installed _only_ at
+# the first boot of this image.
+#
+# To force it to be evaluated later, you can run (as root):
+#
+# /usr/sbin/set-sysconf
+#
+# Comments (all portions of a line following a '#' character) are
+# ignored. This file is read line by line (ordering is ignored). Valid
+# configuration lines are of the form 'key=value'. Whitespace around
+# 'key' and 'value' is ignored.
+#
+# We follow the convention to indent with one space comments, and
+# leave no space to indicate the line is an example that could be
+# uncommented.
+
+# root_pw - Set a password for the root user (by default, it allows
+# for a passwordless login)
+#rootpw=FooBar
