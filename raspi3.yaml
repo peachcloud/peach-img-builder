@@ -87,7 +87,7 @@ steps:
     unless: rootfs_unpacked
 
   - shell: |
-      echo "rpi" > "${ROOT?}/etc/hostname"
+      echo "rpi3" > "${ROOT?}/etc/hostname"
 
       # Allow root logins with no password
       sed -i 's,root:[^:]*:,root::,' "${ROOT?}/etc/shadow"

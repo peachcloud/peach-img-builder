@@ -90,7 +90,7 @@ steps:
       echo "rpi-z" > "${ROOT?}/etc/hostname"
 
       # Allow root logins with no password
-      sed -i 's,root:[^:]*:,root::' "${ROOT?}/etc/shadow"
+      sed -i 's,root:[^:]*:,root::,' "${ROOT?}/etc/shadow"
 
       install -m 644 -o root -g root fstab "${ROOT?}/etc/fstab"
 
