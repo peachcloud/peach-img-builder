@@ -89,18 +89,12 @@ steps:
   - shell: |
       echo "rpi" > "${ROOT?}/etc/hostname"
 
-      # '..VyaTFxP8kT6' is crypt.crypt('raspberry', '..')
-      sed -i 's,root:[^:]*,root:..VyaTFxP8kT6,' "${ROOT?}/etc/shadow"
-
-      sed -i 's,#PermitRootLogin prohibit-password,PermitRootLogin yes,g' "${ROOT?}/etc/ssh/sshd_config"
+      # Allow root logins with no password
+      sed -i 's,root:[^:]*:,root::,' "${ROOT?}/etc/shadow"
 
       install -m 644 -o root -g root fstab "${ROOT?}/etc/fstab"
 
       install -m 644 -o root -g root eth0 "${ROOT?}/etc/network/interfaces.d/eth0"
-
-      mkdir -p "${ROOT?}/etc/iptables"
-      install -m 644 -o root -g root rules.v4 "${ROOT?}/etc/iptables/rules.v4"
-      install -m 644 -o root -g root rules.v6 "${ROOT?}/etc/iptables/rules.v6"
 
       install -m 755 -o root -g root rpi-resizerootfs "${ROOT?}/usr/sbin/rpi3-resizerootfs"
       install -m 644 -o root -g root rpi-resizerootfs.service "${ROOT?}/etc/systemd/system"
