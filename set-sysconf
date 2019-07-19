@@ -1,0 +1,39 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
+use IO::File;
+use IO::Pipe;
+use Sys::Syslog qw(:standard);
+use feature 'switch';
+
+my ($filename, $fh, %conf);
+
+$filename = '/boot/firmware/sysconf.txt';
+exit 0 unless -f $filename;
+
+openlog('sysconf', 'ndelay', 'LOG_DAEMON');
+syslog('info', 'Applying the system configuration settings in /boot/firmware');
+END { closelog(); }
+
+$fh = IO::File->new($filename, 'r');
+while (my $line = $fh->readline) {
+    my ($key, $value);
+    # Allow for comments, and properly ignore them
+    $line =~ s/#.+//;
+    if ( ($key, $value) = ($line =~ m/^\s*([^=]+)\s*=\s*(.*)\s*$/)) {
+	$key = lc($key);
+	if (exists($conf{$key})) {
+	    syslog('warn', "Repeated configuration key: $key. Overwriting with new value ($value)");
+	}
+	$conf{$key} = $value;
+    }
+}
+
+if (my $pass = $conf{root_pw}) {
+    my $pipe = IO::Pipe->new();
+    $pipe->writer('/bin/passwd root');
+    print $pipe $pass;
+    print $pipe $pass;
+}
+
+
