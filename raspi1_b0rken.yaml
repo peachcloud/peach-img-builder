@@ -54,7 +54,7 @@ steps:
   - qemu-debootstrap: buster
     mirror: http://deb.debian.org/debian
     target: /
-    arch: armhf
+    arch: armel
     components:
     - main
     - contrib
@@ -74,10 +74,12 @@ steps:
     - ssh
     - parted
     - dosfstools
+    # Contains /lib/firmware/brcm/brcmfmac43430-sdio.bin (required for WiFi).
+    - firmware-brcm80211
     - wireless-tools
     - wpasupplicant
     - raspi3-firmware
-    - linux-image-armmp
+    - linux-image-rpi
     tag: /
     unless: rootfs_unpacked
 
@@ -85,7 +87,7 @@ steps:
     unless: rootfs_unpacked
 
   - shell: |
-      echo "rpi2" > "${ROOT?}/etc/hostname"
+      echo "rpi-z" > "${ROOT?}/etc/hostname"
 
       # '..VyaTFxP8kT6' is crypt.crypt('raspberry', '..')
       sed -i 's,root:[^:]*,root:..VyaTFxP8kT6,' "${ROOT?}/etc/shadow"
@@ -110,7 +112,10 @@ steps:
       ln -s /etc/systemd/system/rpi-generate-ssh-host-keys.service "${ROOT?}/etc/systemd/system/multi-user.target.requires/rpi3-generate-ssh-host-keys.service"
       rm -f ${ROOT?}/etc/ssh/ssh_host_*_key*
 
-      wget https://github.com/raspberrypi/firmware/blob/master/boot/bcm2709-rpi-2-b.dtb    -O "${ROOT?}/boot/bcm2708-rpi-2-b.dtb"
+      wget https://github.com/raspberrypi/firmware/blob/master/boot/bcm2708-rpi-b.dtb      -O "${ROOT?}/boot/firmware/bcm2708-rpi-b.dtb"
+      wget https://github.com/raspberrypi/firmware/blob/master/boot/bcm2708-rpi-b-plus.dtb -O "${ROOT?}/boot/firmware/bcm2708-rpi-b-plus.dtb"
+      wget https://github.com/raspberrypi/firmware/blob/master/boot/bcm2708-rpi-0-w.dtb    -O "${ROOT?}/boot/firmware/bcm2708-rpi-0-w.dtb"
+      wget https://github.com/raspberrypi/firmware/blob/master/boot/bcm2708-rpi-cm.dtb     -O "${ROOT?}/boot/firmware/bcm2708-rpi-cm.dtb"
 
       cat >> "${ROOT?}/etc/motd" <<'EOT'
 

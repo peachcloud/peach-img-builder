@@ -87,7 +87,7 @@ steps:
     unless: rootfs_unpacked
 
   - shell: |
-      echo "rpi3" > "${ROOT?}/etc/hostname"
+      echo "rpi" > "${ROOT?}/etc/hostname"
 
       # '..VyaTFxP8kT6' is crypt.crypt('raspberry', '..')
       sed -i 's,root:[^:]*,root:..VyaTFxP8kT6,' "${ROOT?}/etc/shadow"
@@ -102,14 +102,14 @@ steps:
       install -m 644 -o root -g root rules.v4 "${ROOT?}/etc/iptables/rules.v4"
       install -m 644 -o root -g root rules.v6 "${ROOT?}/etc/iptables/rules.v6"
 
-      install -m 755 -o root -g root rpi3-resizerootfs "${ROOT?}/usr/sbin/rpi3-resizerootfs"
-      install -m 644 -o root -g root rpi3-resizerootfs.service "${ROOT?}/etc/systemd/system"
+      install -m 755 -o root -g root rpi-resizerootfs "${ROOT?}/usr/sbin/rpi3-resizerootfs"
+      install -m 644 -o root -g root rpi-resizerootfs.service "${ROOT?}/etc/systemd/system"
       mkdir -p "${ROOT?}/etc/systemd/system/systemd-remount-fs.service.requires/"
-      ln -s /etc/systemd/system/rpi3-resizerootfs.service "${ROOT?}/etc/systemd/system/systemd-remount-fs.service.requires/rpi3-resizerootfs.service"
+      ln -s /etc/systemd/system/rpi-resizerootfs.service "${ROOT?}/etc/systemd/system/systemd-remount-fs.service.requires/rpi3-resizerootfs.service"
 
-      install -m 644 -o root -g root rpi3-generate-ssh-host-keys.service "${ROOT?}/etc/systemd/system"
+      install -m 644 -o root -g root rpi-generate-ssh-host-keys.service "${ROOT?}/etc/systemd/system"
       mkdir -p "${ROOT?}/etc/systemd/system/multi-user.target.requires/"
-      ln -s /etc/systemd/system/rpi3-generate-ssh-host-keys.service "${ROOT?}/etc/systemd/system/multi-user.target.requires/rpi3-generate-ssh-host-keys.service"
+      ln -s /etc/systemd/system/rpi-generate-ssh-host-keys.service "${ROOT?}/etc/systemd/system/multi-user.target.requires/rpi3-generate-ssh-host-keys.service"
       rm -f ${ROOT?}/etc/ssh/ssh_host_*_key*
 
       cat >> "${ROOT?}/etc/motd" <<'EOT'
