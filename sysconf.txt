@@ -17,3 +17,6 @@
 # root_pw - Set a password for the root user (by default, it allows
 # for a passwordless login)
 #root_pw=FooBar
+
+# hostname - Set the system hostname.
+#hostname=rpi

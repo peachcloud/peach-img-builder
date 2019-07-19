@@ -5,42 +5,62 @@ use IO::File;
 use IO::Pipe;
 use feature 'switch';
 
-my ($filename, $fh, %conf);
+my ($filename, $conf);
 
 $filename = '/boot/firmware/sysconf.txt';
 exit 0 unless -f $filename;
 
-logger('info', "Applying the system configuration settings in $filename");
+logger('info', "Reading the system configuration settings from $filename");
+$conf = read_conf($filename);
 
-$fh = IO::File->new($filename, 'r');
-while (my $line = $fh->getline) {
-    my ($key, $value);
-    # Allow for comments, and properly ignore them
-    $line =~ s/#.+//;
-    if ( ($key, $value) = ($line =~ m/^\s*([^=]+)\s*=\s*(.*)\s*$/)) {
-	$key = lc($key);
-	if (exists($conf{$key})) {
-	    logger('warn',
-		   "Repeated configuration key: $key. " .
-		   "Overwriting with new value ($value)");
-	}
-	$conf{$key} = $value;
-    }
-}
-
-if (my $pass = delete($conf{root_pw})) {
+if (my $pass = delete($conf->{root_pw})) {
     my $pipe;
+    logger('debug', 'Resetting root password');
     open($pipe, '|-', '/usr/sbin/chpasswd') or die $!;
-    print $pipe "root:$pass";
+    $pipe->print("root:$pass");
     close($pipe);
 }
 
-if (scalar keys %conf) {
+if (my $name = delete($conf->{hostname})) {
+    my $fh;
+    logger('debug', "Setting hostname to '$name'");
+    $fh = IO::File->new('/etc/hostname', 'w') or die $!;
+    $fh->print($name);
+    $fh->close;
+    system('hostname', '--file', '/etc/hostname');
+}
+
+if (scalar keys %$conf) {
     logger('warn', 'Unprocessed keys left in $filename: ' .
-	   join(', ', sort keys %conf));
+	   join(', ', sort keys %$conf));
 }
 
 exit 0;
+
+sub read_conf {
+    my ($file, $conf, $fh);
+    $file = shift;
+
+    $conf = {};
+    $fh = IO::File->new($filename, 'r');
+    while (my $line = $fh->getline) {
+	my ($key, $value);
+	# Allow for comments, and properly ignore them
+	$line =~ s/#.+//;
+	if ( ($key, $value) = ($line =~ m/^\s*([^=]+)\s*=\s*(.*)\s*$/)) {
+	    $key = lc($key);
+	    if (exists($conf->{$key})) {
+		logger('warn',
+		       "Repeated configuration key: $key. " .
+		       "Overwriting with new value ($value)");
+	    }
+	    $conf->{$key} = $value;
+	}
+    }
+    $fh->close;
+
+    return $conf;
+}
 
 sub logger {
     my ($prio, $msg) = @_;
