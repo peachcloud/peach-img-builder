@@ -16,4 +16,4 @@
 
 # root_pw - Set a password for the root user (by default, it allows
 # for a passwordless login)
-#rootpw=FooBar
+#root_pw=FooBar
