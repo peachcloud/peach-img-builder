@@ -5,7 +5,7 @@ https://wiki.debian.org/RaspberryPiImages have been built.
 
 ## Option 1: Downloading an image
 
-See https://wiki.debian.org/RaspberryPi3Images for where to obtain the
+See https://wiki.debian.org/RaspberryPiImages for where to obtain the
 latest pre-built image.
 
 ## Option 2: Building your own image
