@@ -38,7 +38,7 @@ Once you have edited the recipe for your hardware, you can generate
 the image by issuing the following (as root):
 
 ```shell
-    ./vmdb2/vmdb2 --rootfs-tarball=raspi3.tar.gz --output \
+    vmdb2 --rootfs-tarball=raspi3.tar.gz --output \
 	raspi3.img raspi3.yaml --log raspi3.log
 ```
 
