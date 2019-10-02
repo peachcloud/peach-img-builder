@@ -31,7 +31,7 @@ The recipes for building the images are:
 
 You can edit them to customize the built image. Although it could
 (should!) be better documented,
-[http://git.liw.fi/vmdb2/tree/README](vmdb2)'s format is very easy to
+[vmdb2](http://git.liw.fi/vmdb2/tree/README)'s format is very easy to
 understand.
 
 Once you have edited the recipe for your hardware, you can generate
