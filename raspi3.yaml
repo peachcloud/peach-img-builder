@@ -114,7 +114,7 @@ steps:
       install -m 644 -o root -g root rpi-generate-ssh-host-keys.service "${ROOT?}/etc/systemd/system"
       mkdir -p "${ROOT?}/etc/systemd/system/multi-user.target.requires/"
       ln -s /etc/systemd/system/rpi-generate-ssh-host-keys.service "${ROOT?}/etc/systemd/system/multi-user.target.requires/rpi-generate-ssh-host-keys.service"
-      rm -f ${ROOT?}/etc/ssh/ssh_host_*_key*
+      rm -f "${ROOT?}"/etc/ssh/ssh_host_*_key*
     root-fs: /
 
   # Clean up archive cache (likely not useful) and lists (likely outdated) to
