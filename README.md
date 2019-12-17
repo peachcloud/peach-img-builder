@@ -22,27 +22,42 @@ cd image-specs
 For this you will first need to install the `vmdb2` package, on a
 Debian Buster or higher system.
 
-The recipes for building the images are:
+This repository includes a master YAML recipe (which is basically a
+configuration file) for all of the generated images, diverting as
+little as possible in a parametrized way. The master recipe is
+[raspi_master.yaml](raspi_master.yaml).
 
-- [raspi0w.yaml](raspi0w.yaml) for Raspberry Pi 0 and 0w. We believe
-  (but have not tested) it should also work on the 1 models.
-- [raspi2.yaml](raspi2.yaml) for Raspberry Pi 2.
-- [raspi3.yaml](raspi3.yaml) for all of the Raspberry Pi 3 models.
-
-You can edit them to customize the built image. Although it could
-(should!) be better documented,
-[vmdb2](http://git.liw.fi/vmdb2/tree/README)'s format is very easy to
-understand.
-
-Once you have edited the recipe for your hardware, you can generate
-the image by issuing the following (as root):
+A Makefile is supplied to drive the build of the recipes into images —
+`raspi_0w` (for the Raspberry Pi 0, 0w and 1, models A and B),
+`raspi_2` (for the Raspberry Pi 2, models A and B) and `raspi_3`
+(models A, B, B+). That is, if you want to build the default image for
+a Raspberry Pi 3B+, you can just issue:
 
 ```shell
-    vmdb2 --rootfs-tarball=raspi3.tar.gz --output \
-	raspi3.img raspi3.yaml --log raspi3.log
+   make raspi_3.img
 ```
 
-Of course, substituting `raspi3` with the actual flavor you need.
+You might also want to edit them to customize the built image. If you
+want to start from the platform-specific recipe, you can issue:
+
+```shell
+   make raspi_3.yaml
+```
+The recipe drives [vmdb2](https://vmdb2.liw.fi/), the successor to
+`vmdebootstrap`. Please refer to [its
+documentation](https://vmdb2.liw.fi/documentation/) for further
+details; it is quite an easy format to understand.
+
+Copy the generated file to a name descriptive enough for you (say,
+`my_raspi.yaml`). Once you have edited the recipe for your specific
+needs, you can generate the image by issuing the following (as root):
+
+```shell
+    vmdb2 --rootfs-tarball=my_raspi.tar.gz --output \
+	my_raspi.img my_raspi.yaml --log my_raspi.log
+```
+
+This is, just follow what is done by the `_build_img` target of the Makefile.
 
 ## Installing the image onto the Raspberry Pi
 
@@ -60,26 +75,6 @@ sudo dd if=raspi3.img of=/dev/mmcblk0 bs=64k oflag=dsync status=progress
 Then, plug the SD card into the Raspberry Pi, and power it up.
 
 The image uses the hostname `rpi0w`, `rpi2` or `rpi3` depending on the
-target build, so assuming your local network correctly resolves
-hostnames communicated via DHCP, you can log into your Raspberry Pi
-once it booted:
-
-```shell
-ssh root@rpi3
-# Enter password “raspberry”
-```
-
-Note that the default firewall rules only allow SSH access from the local
-network. If you wish to enable SSH access globally, first change your root
-password using `passwd`. Next, issue the following commands as root to remove
-the corresponding firewall rules:
-
-```shell
-iptables -F INPUT
-ip6tables -F INPUT
-```
-
-This will allow SSH connections globally until the next reboot. To make this
-persistent, remove the lines containing "REJECT" in `/etc/iptables/rules.v4` and
-`/etc/iptables/rules.v6`.
-
+target build. The provided image will allow you to log in with the
+`root` account with no password set, but only logging in at the
+physical console (be it serial or by USB keyboard and HDMI monitor).

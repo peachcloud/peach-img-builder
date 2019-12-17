@@ -2,3 +2,6 @@
 raspi*.img
 raspi*.log
 raspi*.tar.gz
+raspi_0w.yaml
+raspi_2.yaml
+raspi_3.yaml
