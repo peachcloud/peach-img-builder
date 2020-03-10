@@ -13,7 +13,7 @@ actions:
 
   - action: apt
     recommends: false
-    packages: [ sudo, openssh-server, adduser, systemd-sysv, iproute2, net-tools, isc-dhcp-client, nano, raspi3-firmware, plymouth-label, desktop-base, lxde, xserver-xorg, linux-image-arm64 ]
+    packages: [ sudo, openssh-server, adduser, systemd-sysv, iproute2, net-tools, isc-dhcp-client, nano, raspi3-firmware, plymouth-label, desktop-base, lxde, xserver-xorg, linux-image-arm64, firmware-brcm80211 ]
 
   - action: run
     chroot: true
