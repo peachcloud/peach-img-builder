@@ -48,15 +48,18 @@ steps:
     - non-free
     unless: rootfs_unpacked
 
-  # TODO(https://bugs.debian.org/877855): remove this workaround once
-  # debootstrap is fixed
+  - create-file: /etc/apt/sources.list
+    trailing-newline: '1'
+    contents: |
+      deb http://deb.debian.org/debian buster main contrib non-free
+      deb http://deb.debian.org/debian-security buster/updates main contrib non-free
+      # Backports are _not_ enabled by default.
+      # Enable them by uncommenting the following line:
+      # deb http://deb.debian.org/debian buster-backports main contrib non-free
+    unless: rootfs_unpacked
+
   - chroot: /
     shell: |
-      echo 'deb http://deb.debian.org/debian buster main contrib non-free' > /etc/apt/sources.list
-      echo 'deb http://deb.debian.org/debian-security buster/updates main contrib non-free' >> /etc/apt/sources.list
-      echo '# Backports are _not_ enabled by default. ' >> /etc/apt/sources.list
-      echo '# Enable them by uncommenting the following line:' >> /etc/apt/sources.list
-      echo '# deb http://deb.debian.org/debian buster-backports main contrib non-free' >> /etc/apt/sources.list
       apt-get update
     unless: rootfs_unpacked
 
