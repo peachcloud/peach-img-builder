@@ -56,6 +56,7 @@ steps:
       # Backports are _not_ enabled by default.
       # Enable them by uncommenting the following line:
       # deb http://deb.debian.org/debian buster-backports main contrib non-free
+      __SPU_ENABLE__
     unless: rootfs_unpacked
 
   - chroot: /
