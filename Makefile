@@ -29,7 +29,7 @@ raspi_3.yaml: raspi_master.yaml
 	sed "s/__HOST__/rpi3/" > $@
 
 %.sha256: %.img
-	sha256sum $(@:sha256=img) $@ > $@
+	sha256sum $(@:sha256=img) > $@
 
 %.img: %.yaml
 	touch $(@:.img=.log)
