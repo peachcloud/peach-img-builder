@@ -1,5 +1,6 @@
 # suggested build result and log filenames
 raspi*.img
+raspi*.img.xz
 raspi*.log
 raspi*.tar.gz
 raspi*.sha256
