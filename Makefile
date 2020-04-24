@@ -10,7 +10,7 @@ raspi_0w.yaml: raspi_master.yaml
 	sed "s/__LINUX_IMAGE__/linux-image-rpi/" | \
 	sed "s/__EXTRA_PKGS__/- firmware-brcm80211/" | \
 	sed "s/__DTB__/\\/usr\\/lib\\/linux-image-*-rpi\\/bcm*rpi-*.dtb/" |\
-	sed "s/__SPU_ENABLE__/deb http:\/\/deb.debian.org\/debian\/ stable-proposed-updates main # Raspberries 0\/1 need raspi3-firmware >=  1.20190215-1+deb10u3/" |\
+	sed "s/__OTHER_APT_ENABLE__/deb http:\/\/deb.debian.org\/debian\/ buster-proposed-updates main contrib non-free # Raspberries 0\/1 need raspi3-firmware >=  1.20190215-1+deb10u3/" |\
 	sed "s/__HOST__/rpi0/" > $@
 
 raspi_2.yaml: raspi_master.yaml
@@ -18,7 +18,7 @@ raspi_2.yaml: raspi_master.yaml
 	sed "s/__LINUX_IMAGE__/linux-image-armmp/" | \
 	grep -v "__EXTRA_PKGS__" | \
 	sed "s/__DTB__/\\/usr\\/lib\\/linux-image-*-armmp\\/bcm*rpi*.dtb/" |\
-	sed "s/__SPU_ENABLE__//" |\
+	sed "s/__OTHER_APT_ENABLE__//" |\
 	sed "s/__HOST__/rpi2/" > $@
 
 raspi_3.yaml: raspi_master.yaml
@@ -26,7 +26,7 @@ raspi_3.yaml: raspi_master.yaml
 	sed "s/__LINUX_IMAGE__/linux-image-arm64/" | \
 	sed "s/__EXTRA_PKGS__/- firmware-brcm80211/" | \
 	sed "s/__DTB__/\\/usr\\/lib\\/linux-image-*-arm64\\/broadcom\\/bcm*rpi*.dtb/" |\
-	sed "s/__SPU_ENABLE__//" |\
+	sed "s/__OTHER_APT_ENABLE__//" |\
 	sed "s/__HOST__/rpi3/" > $@
 
 %.sha256: %.img.xz
