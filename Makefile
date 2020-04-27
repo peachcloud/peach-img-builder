@@ -1,6 +1,6 @@
 all: shasums
 
-shasums: raspi_0w.sha256 raspi_2.sha256 raspi_3.sha256
+shasums: raspi_0w.sha256 raspi_2.sha256 raspi_3.sha256 raspi_0w.xz.sha256 raspi_2.xz.sha256 raspi_3.xz.sha256
 xzimages: raspi_0w.img.xz raspi_2.img.xz raspi_3.img.xz
 images: raspi_0w.img raspi_2.img raspi_3.img
 yaml: raspi_0w.yaml raspi_2.yaml raspi_3.yaml
@@ -30,7 +30,12 @@ raspi_3.yaml: raspi_master.yaml
 	sed "s/__HOST__/rpi3/" > $@
 
 %.sha256: %.img.xz
-	sha256sum $(@:sha256=img.xz) > $@
+	echo $@
+	sha256sum $(@:sha256=img) > $@
+
+%.xz.sha256: %.img.xz
+	echo $@
+	sha256sum $(@:xz.sha256=img.xz) > $@
 
 %.img.xz: %.img
 	xz -f -k -z -9 $(@:.xz=)
