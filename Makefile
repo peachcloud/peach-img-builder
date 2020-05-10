@@ -34,6 +34,17 @@ raspi_3.yaml: raspi_master.yaml
 	sed "s/__OTHER_APT_ENABLE__//" |\
 	sed "s/__HOST__/rpi3/" > $@
 
+raspi_4.yaml: raspi_master.yaml
+	cat raspi_master.yaml | sed "s/__ARCH__/arm64/" | \
+	sed "s#raspi3-firmware#raspi3-firmware/unstable#" | \
+	sed "s#apt-get update#echo 'APT::Default-Release \"stable\";' > /etc/apt/apt.conf\n      apt-get update#" | \
+	sed "s#cmdline.txt#cmdline.txt\n      sed -i 's/cma=64M //' /boot/firmware/cmdline.txt\n      sed -i 's/cma=\\\$$CMA //' /etc/kernel/postinst.d/z50-raspi-firmware#" | \
+	sed "s/__LINUX_IMAGE__/linux-image-arm64\/unstable/" | \
+	sed "s/__EXTRA_PKGS__/- firmware-brcm80211/" | \
+	sed "s/__DTB__/\\/usr\\/lib\\/linux-image-*-arm64\\/broadcom\\/bcm*rpi*.dtb/" |\
+	sed "s/__OTHER_APT_ENABLE__/deb http:\/\/deb.debian.org\/debian\/ unstable main contrib non-free # raspi 4 needs the latest kernel (5.5 or higher) and raspi-firmware newer than buster's/" |\
+	sed "s/__HOST__/rpi4/" > $@
+
 %.sha256: %.img.xz
 	echo $@
 	sha256sum $(@:sha256=img) > $@
