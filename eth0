@@ -2,5 +2,6 @@ auto eth0
 
 # TODO: switch back to iptables-persistent once it re-enters testing
 iface eth0 inet dhcp
-	pre-up iptables-restore < /etc/iptables/rules.v4
-	pre-up ip6tables-restore < /etc/iptables/rules.v6
+# We don't currently support setup of firewalls here.
+#	pre-up iptables-restore < /etc/iptables/rules.v4
+#	pre-up ip6tables-restore < /etc/iptables/rules.v6
