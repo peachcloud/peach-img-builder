@@ -43,6 +43,7 @@ raspi_4.yaml: raspi_master.yaml
 	sed "s/__EXTRA_PKGS__/- firmware-brcm80211/" | \
 	sed "s/__DTB__/\\/usr\\/lib\\/linux-image-*-arm64\\/broadcom\\/bcm*rpi*.dtb/" |\
 	sed "s/__OTHER_APT_ENABLE__/deb http:\/\/deb.debian.org\/debian\/ unstable main contrib non-free # raspi 4 needs the latest kernel (5.5 or higher) and raspi-firmware newer than buster's/" |\
+	sed "s#hostname\"#hostname\"\n      wget https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/plain/brcm/brcmfmac43455-sdio.raspberrypi,4-model-b.txt -P \"\\\$${ROOT?}/lib/firmware/brcm\"#" |\
 	sed "s/__HOST__/rpi4/" > $@
 
 %.sha256: %.img.xz
