@@ -69,7 +69,7 @@ important parts of your system.  Double check it's the correct
 device!), copy the image onto the SD card:
 
 ```shell
-sudo dd if=raspi3.img of=/dev/mmcblk0 bs=64k oflag=dsync status=progress
+sudo dd if=raspi_3.img of=/dev/mmcblk0 bs=64k oflag=dsync status=progress
 ```
 
 Then, plug the SD card into the Raspberry Pi, and power it up.
