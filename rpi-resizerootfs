@@ -1,9 +1,7 @@
 #!/bin/sh
 
-roottmp=$(lsblk -l -o NAME,MOUNTPOINT | grep '/$')
-rootpart=/dev/${roottmp%% */}
-rootdev=${rootpart%2}
-rootdev=${rootdev%p}
+rootpart="$(findmnt -n -o SOURCE /)"
+rootdev="/dev/$(lsblk -no pkname "$rootpart")"
 
 flock $rootdev sfdisk -f $rootdev -N 2 <<EOF
 ,+
