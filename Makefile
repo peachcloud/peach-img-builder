@@ -55,7 +55,7 @@ _clean_images:
 _clean_xzimages:
 	rm -f raspi_0w.img.xz raspi_2.img.xz raspi_3.img.xz
 _clean_shasums:
-	rm -f raspi_0w.sha256 raspi_2.sha256 raspi_3.sha256
+	rm -f raspi_0w.sha256 raspi_2.sha256 raspi_3.sha256 raspi_0w.xz.sha256 raspi_2.xz.sha256 raspi_3.xz.sha256
 _clean_logs:
 	rm -f raspi_0w.log raspi_2.log raspi_3.log
 _clean_tarballs:
