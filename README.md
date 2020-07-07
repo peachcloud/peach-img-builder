@@ -29,9 +29,10 @@ little as possible in a parametrized way. The master recipe is
 
 A Makefile is supplied to drive the build of the recipes into images —
 `raspi_0w` (for the Raspberry Pi 0, 0w and 1, models A and B),
-`raspi_2` (for the Raspberry Pi 2, models A and B) and `raspi_3`
-(models A, B, B+). That is, if you want to build the default image for
-a Raspberry Pi 3B+, you can just issue:
+`raspi_2` (for the Raspberry Pi 2, models A and B), `raspi_3`
+(for all models of the Raspberry Pi 3), and `raspi_4` (for all
+models of the Raspberry Pi 4). That is, if you want to build the
+default image for a Raspberry Pi 3B+, you can just issue:
 
 ```shell
    make raspi_3.img
@@ -74,7 +75,7 @@ sudo dd if=raspi_3.img of=/dev/mmcblk0 bs=64k oflag=dsync status=progress
 
 Then, plug the SD card into the Raspberry Pi, and power it up.
 
-The image uses the hostname `rpi0w`, `rpi2` or `rpi3` depending on the
+The image uses the hostname `rpi0w`, `rpi2`, `rpi3`, or `rpi4` depending on the
 target build. The provided image will allow you to log in with the
 `root` account with no password set, but only logging in at the
 physical console (be it serial or by USB keyboard and HDMI monitor).
