@@ -24,6 +24,9 @@
 # for a passwordless login)
 #root_pw=FooBar
 
+# root_authorized_key - Set an authorized key for a root ssh login
+#root_authorized_key=
+
 # hostname - Set the system hostname.
 #hostname=rpi
 

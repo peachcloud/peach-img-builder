@@ -24,6 +24,26 @@ if (my $pass = delete($conf->{root_pw})) {
     close($pipe);
 }
 
+if (my $root_authorized_key = delete($conf->{root_authorized_key})) {
+    my $fh;
+    logger('debug', "Adding key to root's authorized_keys");
+    if(! -d "/root/.ssh") {
+        if(!mkdir("/root/.ssh", 0700)) {
+            my $err = sprintf("Could not create /root/.ssh directory: %s", $!);
+            logger('error', $err);
+            die $err;
+        }
+    }
+
+    unless ($fh = IO::File->new('/root/.ssh/authorized_keys', 'w', 0600)) {
+        my $err = $!;
+        logger('error', "Could not write /root/.ssh/authorized_keys: $err");
+        die $err;
+    }
+    $fh->print($root_authorized_key);
+    $fh->close;
+}
+
 if (my $name = delete($conf->{hostname})) {
     my $fh;
     logger('debug', "Setting hostname to '$name'");
@@ -112,6 +132,9 @@ q(# This file will be automatically evaluated and installed at next boot
 # root_pw - Set a password for the root user (by default, it allows
 # for a passwordless login)
 #root_pw=FooBar
+
+# root_authorized_key - Set an authorized key for a root ssh login
+#root_authorized_key=
 
 # hostname - Set the system hostname.
 #hostname=rpi
