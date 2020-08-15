@@ -86,22 +86,22 @@ steps:
       # Allow root logins locally with no password
       sed -i 's,root:[^:]*:,root::,' "${ROOT?}/etc/shadow"
 
-      install -m 644 -o root -g root fstab "${ROOT?}/etc/fstab"
+      install -m 644 -o root -g root rootfs/etc/fstab "${ROOT?}/etc/fstab"
 
-      install -m 644 -o root -g root eth0 "${ROOT?}/etc/network/interfaces.d/eth0"
+      install -m 644 -o root -g root rootfs/etc/network/interfaces.d/eth0 "${ROOT?}/etc/network/interfaces.d/eth0"
 
-      install -m 755 -o root -g root rpi-set-sysconf "${ROOT?}/usr/local/sbin/rpi-set-sysconf"
-      install -m 644 -o root -g root rpi-set-sysconf.service "${ROOT?}/etc/systemd/system"
-      install -m 644 -o root -g root sysconf.txt "${ROOT?}/boot/firmware/sysconf.txt"
+      install -m 755 -o root -g root rootfs/usr/local/sbin/rpi-set-sysconf "${ROOT?}/usr/local/sbin/rpi-set-sysconf"
+      install -m 644 -o root -g root rootfs/etc/systemd/system/rpi-set-sysconf.service "${ROOT?}/etc/systemd/system/"
+      install -m 644 -o root -g root rootfs/boot/firmware/sysconf.txt "${ROOT?}/boot/firmware/sysconf.txt"
       mkdir -p "${ROOT?}/etc/systemd/system/basic.target.requires/"
       ln -s /etc/systemd/system/rpi-set-sysconf.service "${ROOT?}/etc/systemd/system/basic.target.requires/rpi-set-sysconf.service"
 
-      install -m 755 -o root -g root rpi-resizerootfs "${ROOT?}/usr/sbin/rpi-resizerootfs"
-      install -m 644 -o root -g root rpi-resizerootfs.service "${ROOT?}/etc/systemd/system"
+      install -m 755 -o root -g root rootfs/usr/sbin/rpi-resizerootfs "${ROOT?}/usr/sbin/rpi-resizerootfs"
+      install -m 644 -o root -g root rootfs/etc/systemd/system/rpi-resizerootfs.service "${ROOT?}/etc/systemd/system/"
       mkdir -p "${ROOT?}/etc/systemd/system/systemd-remount-fs.service.requires/"
       ln -s /etc/systemd/system/rpi-resizerootfs.service "${ROOT?}/etc/systemd/system/systemd-remount-fs.service.requires/rpi-resizerootfs.service"
 
-      install -m 644 -o root -g root rpi-generate-ssh-host-keys.service "${ROOT?}/etc/systemd/system"
+      install -m 644 -o root -g root rootfs/etc/systemd/system/rpi-generate-ssh-host-keys.service "${ROOT?}/etc/systemd/system/"
       mkdir -p "${ROOT?}/etc/systemd/system/multi-user.target.requires/"
       ln -s /etc/systemd/system/rpi-generate-ssh-host-keys.service "${ROOT?}/etc/systemd/system/multi-user.target.requires/rpi-generate-ssh-host-keys.service"
       rm -f "${ROOT?}"/etc/ssh/ssh_host_*_key*
