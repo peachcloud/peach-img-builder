@@ -19,8 +19,16 @@ git clone --recursive https://salsa.debian.org/raspi-team/image-specs.git
 cd image-specs
 ```
 
-For this you will first need to install the `vmdb2`, `qemu-user-static`,
-and `binfmt-support` packages on a Debian Buster (or higher) system.
+For this you will first need to install the following packages on a
+Debian Buster (10) or higher system:
+
+* vmdb2
+* dosfstools
+* qemu-user-static
+* binfmt-support
+
+Do note that –at least currently– vmdb2 uses some syntax that is available
+only in the version in testing (Bullseye).
 
 This repository includes a master YAML recipe (which is basically a
 configuration file) for all of the generated images, diverting as
