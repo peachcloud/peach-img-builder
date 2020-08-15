@@ -89,6 +89,7 @@ steps:
       install -m 644 -o root -g root rootfs/etc/fstab "${ROOT?}/etc/fstab"
 
       install -m 644 -o root -g root rootfs/etc/network/interfaces.d/eth0 "${ROOT?}/etc/network/interfaces.d/eth0"
+      install -m 600 -o root -g root rootfs/etc/network/interfaces.d/wlan0 "${ROOT?}/etc/network/interfaces.d/wlan0"
 
       install -m 755 -o root -g root rootfs/usr/local/sbin/rpi-set-sysconf "${ROOT?}/usr/local/sbin/rpi-set-sysconf"
       install -m 644 -o root -g root rootfs/etc/systemd/system/rpi-set-sysconf.service "${ROOT?}/etc/systemd/system/"
