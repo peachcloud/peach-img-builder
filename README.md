@@ -26,6 +26,7 @@ Debian Buster (10) or higher system:
 * dosfstools
 * qemu-user-static
 * binfmt-support
+* time
 
 Do note that –at least currently– vmdb2 uses some syntax that is available
 only in the version in testing (Bullseye).
