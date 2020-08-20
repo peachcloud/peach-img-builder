@@ -22,7 +22,7 @@ cd image-specs
 For this you will first need to install the following packages on a
 Debian Buster (10) or higher system:
 
-* vmdb2
+* vmdb2 (>= 0.17)
 * dosfstools
 * qemu-user-static
 * binfmt-support
