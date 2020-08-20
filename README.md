@@ -24,13 +24,18 @@ Debian Buster (10) or higher system:
 
 * vmdb2 (>= 0.17)
 * dosfstools
-* qemu-user-static
 * binfmt-support
+* qemu-user-static
 * time
 * kpartx
 
 Do note that –at least currently– vmdb2 uses some syntax that is available
 only in the version in testing (Bullseye).
+
+If debootstrap still fails with exec format error, try
+running `dpkg-reconfigure qemi-user-static`. This calls
+`/var/lib/dpkg/info/qemu-user-static.postinst` which uses binfmt-support
+to register the executable format with /usr/bin/qemu-$fmt-static
 
 This repository includes a master YAML recipe (which is basically a
 configuration file) for all of the generated images, diverting as
