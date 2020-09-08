@@ -112,7 +112,7 @@ q(# This file will be automatically evaluated and installed at next boot
 #
 # To force it to be evaluated immediately, you can run (as root):
 #
-#     /usr/sbin/rpi-set-sysconf
+#     /usr/local/sbin/rpi-set-sysconf
 #
 # You can disable the file evaluation by disabling the rpi-set-sysconf
 # service in systemd:
