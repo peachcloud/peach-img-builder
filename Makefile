@@ -37,7 +37,7 @@ raspi_3.yaml: raspi_master.yaml
 raspi_4.yaml: raspi_master.yaml
 	cat raspi_master.yaml | sed "s/__ARCH__/arm64/" | \
 	sed "s#raspi3-firmware#raspi3-firmware/unstable#" | \
-	sed "s#apt-get update#echo 'APT::Default-Release \"stable\";' > /etc/apt/apt.conf\n      apt-get update#" | \
+	sed "s#apt-get update#echo 'APT::Default-Release \"buster\";' > /etc/apt/apt.conf\n      apt-get update#" | \
 	sed "s#cmdline.txt#cmdline.txt\n      sed -i 's/cma=64M //' /boot/firmware/cmdline.txt\n      sed -i 's/cma=\\\$$CMA //' /etc/kernel/postinst.d/z50-raspi-firmware#" | \
 	sed "s/__LINUX_IMAGE__/linux-image-arm64\/unstable/" | \
 	sed "s/__EXTRA_PKGS__/- firmware-brcm80211\/unstable/" | \
