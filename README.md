@@ -22,19 +22,25 @@ cd image-specs
 For this you will first need to install the following packages on a
 Debian Buster (10) or higher system:
 
-* vmdb2
+* vmdb2 (>= 0.17)
 * dosfstools
-* qemu-user-static
 * binfmt-support
+* qemu-user-static
 * time
+* kpartx
 
 To install these (as root):
 ```shell
-   apt install -y vmdb2 dosfstools qemu-user-static binfmt-support time
+   apt install -y vmdb2 dosfstools qemu-user-static binfmt-support time kpartx
 ```
 
 Do note that –at least currently– vmdb2 uses some syntax that is available
 only in the version in testing (Bullseye).
+
+If debootstrap still fails with exec format error, try
+running `dpkg-reconfigure qemi-user-static`. This calls
+`/var/lib/dpkg/info/qemu-user-static.postinst` which uses binfmt-support
+to register the executable format with /usr/bin/qemu-$fmt-static
 
 This repository includes a master YAML recipe (which is basically a
 configuration file) for all of the generated images, diverting as
