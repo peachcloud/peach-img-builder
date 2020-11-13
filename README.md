@@ -26,6 +26,12 @@ Debian Buster (10) or higher system:
 * dosfstools
 * qemu-user-static
 * binfmt-support
+* time
+
+To install these (as root):
+```shell
+   apt install -y vmdb2 dosfstools qemu-user-static binfmt-support time
+```
 
 Do note that –at least currently– vmdb2 uses some syntax that is available
 only in the version in testing (Bullseye).
@@ -39,7 +45,9 @@ A Makefile is supplied to drive the build of the recipes into images —
 `raspi_0w` (for the Raspberry Pi 0, 0w and 1, models A and B),
 `raspi_2` (for the Raspberry Pi 2, models A and B), `raspi_3`
 (for all models of the Raspberry Pi 3), and `raspi_4` (for all
-models of the Raspberry Pi 4). That is, if you want to build the
+models of the Raspberry Pi 4). Some portions of building the image
+will require root privileges, the you'll need to execute *make*
+below as root. That being said, if you want to build the
 default image for a Raspberry Pi 3B+, you can just issue:
 
 ```shell
