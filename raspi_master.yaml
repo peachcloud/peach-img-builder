@@ -48,6 +48,7 @@ steps:
     - non-free
     unless: rootfs_unpacked
 
+  # for now it appears this is not actually running
   - create-file: /etc/apt/sources.list
     trailing-newline: '1'
     contents: |
@@ -74,6 +75,13 @@ steps:
     - raspi3-firmware
     - __LINUX_IMAGE__
     __EXTRA_PKGS__
+    tag: /
+    unless: rootfs_unpacked
+
+  - apt: install
+    packages:
+      - git
+      - python
     tag: /
     unless: rootfs_unpacked
 
@@ -106,6 +114,11 @@ steps:
       mkdir -p "${ROOT?}/etc/systemd/system/multi-user.target.requires/"
       ln -s /etc/systemd/system/rpi-generate-ssh-host-keys.service "${ROOT?}/etc/systemd/system/multi-user.target.requires/rpi-generate-ssh-host-keys.service"
       rm -f "${ROOT?}"/etc/ssh/ssh_host_*_key*
+    root-fs: /
+
+
+  - shell: |
+      echo "another test" > "${ROOT?}/srv/secondtest.txt"
     root-fs: /
 
   # Copy the relevant device tree files to the boot partition
