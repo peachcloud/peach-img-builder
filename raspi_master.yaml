@@ -132,3 +132,22 @@ steps:
   - shell: |
       rm "${ROOT?}/etc/resolv.conf"
     root-fs: /
+
+
+  - create-file: /srv/hi.txt
+    trailing-newline: '1'
+    contents: |
+      hello
+      here
+      are
+      some
+      lines
+    unless: rootfs_unpacked
+
+
+  - shell: |
+      echo "does this work?" > /srv/turtle.txt
+
+      echo "and also this?" > /srv/cat.txt
+
+    root-fs: /

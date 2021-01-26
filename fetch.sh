@@ -1,0 +1,1 @@
+scp -i /home/notplants/.ssh/do_rsa root@165.227.141.30:/srv/image-specs/raspi_3.img peach.img

@@ -8,3 +8,7 @@ raspi_0w.yaml
 raspi_2.yaml
 raspi_3.yaml
 raspi_4.yaml
+*.img
+vmdb2/*
+.idea
+vmdb2
