@@ -1,1 +1,1 @@
-ssh -i /home/notplants/.ssh/do_rsa root@165.227.141.30
+ssh -i /Users/maxfowler/.ssh/do_rsa root@165.227.141.30
