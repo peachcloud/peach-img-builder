@@ -1,0 +1,1 @@
+sudo dd bs=4m if=/dev/disk1 of=peach-saved-img.img

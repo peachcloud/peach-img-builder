@@ -2,7 +2,7 @@
 
 steps:
   - mkimg: "{{ output }}"
-    size: 3000M
+    size: 1500M
 
   - mklabel: msdos
     device: "{{ output }}"
@@ -128,29 +128,15 @@ steps:
       ls -aR /boot
       sed -i 's/.dev.mmcblk0p2/LABEL=RASPIROOT/' /boot/firmware/cmdline.txt
 
-  # BEGINNING OF PEACH CONFIG
+  # BEGINNING OF PEACH SIMPLE CONFIG
   - shell: |
-      echo "This peach image was configured on $(date +%Y%m%d) with peach-img-builder version 0.1.0 and peach-config version 0.2.5" > "${ROOT?}/srv/peach-img.log"
+      echo "This peach image was configured with the peach simple config version 0.1.1" > /srv/os-peach-provenance.txt
     root-fs: /
 
-  - apt: install
-    packages:
-      - git
-      - python
-      - wget
-    tag: /
-
-  - chroot: /
-    shell: |
-      git clone -b no-input https://github.com/peachcloud/peach-config.git /srv/peach-config
-      echo "test this 12" > /srv/testhis.txt
-      cd /srv/peach-config/ && python3 /srv/peach-config/scripts/test.py
-
-  - chroot: /
-    shell: |
-      cd /srv/peach-config/ && python3 /srv/peach-config/scripts/setup_dev_env.py -i -n peach
-
-  # END OF PEACH CONFIG
+  - shell: |
+      cp -r rpi-config/files "${ROOT?}/srv/rpi-config"
+    root-fs: /
+  # END OF PEACH SIMPLE CONFIG
 
   # TODO(https://github.com/larswirzenius/vmdb2/issues/24): remove once vmdb
   # clears /etc/resolv.conf on its own.
