@@ -12,3 +12,7 @@ raspi_4.yaml
 vmdb2/*
 .idea
 vmdb2
+fetch.sh
+compress.sh
+deploy.sh
+img
