@@ -10,8 +10,16 @@ the python setup script from [peach-config](https://github.com/peachcloud/peach-
 
 Run,
 ```shell
-sudo apt install -y vmdb2 dosfstools qemu-user-static binfmt-support time kpartx
+sudo apt install -y dosfstools qemu-user-static binfmt-support time kpartx
 ```
+
+This script requires the latest version of vmdb2 which is not currently available via apt. 
+After installing the above, clone the vmdb2 repository and add it to your path. 
+```shell
+git clone https://gitlab.com/larswirzenius/vmdb2.git
+cd vmdb2; ln -s vmdb2 /usr/local/bin/vmdb2
+```
+
 
 # To Build A New Image
 
