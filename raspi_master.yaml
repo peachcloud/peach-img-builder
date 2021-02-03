@@ -2,7 +2,7 @@
 
 steps:
   - mkimg: "{{ output }}"
-    size: 1500M
+    size: 3000M
 
   - mklabel: msdos
     device: "{{ output }}"
@@ -48,7 +48,6 @@ steps:
     - non-free
     unless: rootfs_unpacked
 
-  # for now it appears this is not actually running
   - create-file: /etc/apt/sources.list
     trailing-newline: '1'
     contents: |
@@ -78,13 +77,6 @@ steps:
     tag: /
     unless: rootfs_unpacked
 
-  - apt: install
-    packages:
-      - git
-      - python
-    tag: /
-    unless: rootfs_unpacked
-
   - cache-rootfs: /
     unless: rootfs_unpacked
 
@@ -96,8 +88,9 @@ steps:
 
       install -m 644 -o root -g root rootfs/etc/fstab "${ROOT?}/etc/fstab"
 
-      install -m 644 -o root -g root rootfs/etc/network/interfaces.d/eth0 "${ROOT?}/etc/network/interfaces.d/eth0"
-      install -m 600 -o root -g root rootfs/etc/network/interfaces.d/wlan0 "${ROOT?}/etc/network/interfaces.d/wlan0"
+      #not needed for peach
+      #install -m 644 -o root -g root rootfs/etc/network/interfaces.d/eth0 "${ROOT?}/etc/network/interfaces.d/eth0"
+      #install -m 600 -o root -g root rootfs/etc/network/interfaces.d/wlan0 "${ROOT?}/etc/network/interfaces.d/wlan0"
 
       install -m 755 -o root -g root rootfs/usr/local/sbin/rpi-set-sysconf "${ROOT?}/usr/local/sbin/rpi-set-sysconf"
       install -m 644 -o root -g root rootfs/etc/systemd/system/rpi-set-sysconf.service "${ROOT?}/etc/systemd/system/"
@@ -114,11 +107,6 @@ steps:
       mkdir -p "${ROOT?}/etc/systemd/system/multi-user.target.requires/"
       ln -s /etc/systemd/system/rpi-generate-ssh-host-keys.service "${ROOT?}/etc/systemd/system/multi-user.target.requires/rpi-generate-ssh-host-keys.service"
       rm -f "${ROOT?}"/etc/ssh/ssh_host_*_key*
-    root-fs: /
-
-
-  - shell: |
-      echo "another test" > "${ROOT?}/srv/secondtest.txt"
     root-fs: /
 
   # Copy the relevant device tree files to the boot partition
@@ -140,27 +128,27 @@ steps:
       ls -aR /boot
       sed -i 's/.dev.mmcblk0p2/LABEL=RASPIROOT/' /boot/firmware/cmdline.txt
 
+  # BEGINNING OF PEACH CONFIG
+  - shell: |
+      echo "This peach base image was configured on $(date +%Y%m%d) with peach-img-builder version 0.1.0" > "${ROOT?}/srv/peach-img-provenance.log"
+    root-fs: /
+
+  - apt: install
+    packages:
+      - git
+      - python
+      - wget
+    tag: /
+
+  - chroot: /
+    shell: |
+      git clone -b no-input https://github.com/peachcloud/peach-config.git /srv/peach-config
+      cd /srv/peach-config/ && python3 /srv/peach-config/scripts/setup_dev_env.py -i -n peach
+
+  # END OF PEACH CONFIG
+
   # TODO(https://github.com/larswirzenius/vmdb2/issues/24): remove once vmdb
   # clears /etc/resolv.conf on its own.
   - shell: |
       rm "${ROOT?}/etc/resolv.conf"
-    root-fs: /
-
-
-  - create-file: /srv/hi.txt
-    trailing-newline: '1'
-    contents: |
-      hello
-      here
-      are
-      some
-      lines
-    unless: rootfs_unpacked
-
-
-  - shell: |
-      echo "does this work?" > /srv/turtle.txt
-
-      echo "and also this?" > /srv/cat.txt
-
     root-fs: /
