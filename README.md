@@ -44,3 +44,12 @@ PeachCloud images are versioned and published for release at http://releases.pea
 ## What's Different In This Fork?
 
 the only file that is edited from the original is ```raspi_master.yaml```
+
+
+## Image Size
+
+Note that the alloted disc image size in the original image was 1500M. 
+This is not large enough to allow for the whole peach installation, 
+so this image is currently at 3000M (but could be somewhat reduced). 
+
+On first boot, the image resizes to take up the whole size of the SD card it is installed on.
