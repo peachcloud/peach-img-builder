@@ -6,7 +6,7 @@ This vmdb2 script runs:
 `python setup_dev_env.py -i -n peach`,
 the python setup script from [peach-config](https://github.com/peachcloud/peach-config).
 
-# Installing vmdb2
+## Installing vmdb2
 
 Run,
 ```shell
@@ -21,7 +21,7 @@ cd vmdb2; ln -s vmdb2 /usr/local/bin/vmdb2
 ```
 
 
-# To Build A New Image
+## To Build A New Image
 
 Run,
 ```shell
@@ -32,11 +32,15 @@ Theoretically, you could also use this script to build images for other pi versi
 by running the same command with `raspi_0w.img` or `raspi_2.img` or `raspi_3.img`
 
 
-# Installing The Image
+## Installing The Image
 
 This image can then be flashed to an SD card using dd or etcher. 
 
 
-# Publishing The Image
+## Publishing The Image
 
 PeachCloud images are versioned and published for release at http://releases.peachcloud.org/
+
+## What's Different In This Fork?
+
+the only file that is edited from the original is ```raspi_master.yaml```
