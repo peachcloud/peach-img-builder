@@ -1,1 +1,0 @@
-ssh -i /home/notplants/.ssh/do_rsa root@165.227.141.30

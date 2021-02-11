@@ -2,7 +2,7 @@
 
 steps:
   - mkimg: "{{ output }}"
-    size: 3000M
+    size: 2000M
 
   - mklabel: msdos
     device: "{{ output }}"
@@ -142,7 +142,7 @@ steps:
 
   - chroot: /
     shell: |
-      git clone -b no-input https://github.com/peachcloud/peach-config.git /srv/peach-config
+      git clone -b dev https://github.com/peachcloud/peach-config.git /srv/peach-config
       cd /srv/peach-config/ && python3 /srv/peach-config/scripts/setup_dev_env.py -i -n peach
 
   # END OF PEACH CONFIG

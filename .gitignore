@@ -16,3 +16,4 @@ fetch.sh
 compress.sh
 deploy.sh
 img
+ssh.sh
