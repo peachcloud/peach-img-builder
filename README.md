@@ -20,7 +20,6 @@ git clone https://gitlab.com/larswirzenius/vmdb2.git
 cd vmdb2; ln -s vmdb2 /usr/local/bin/vmdb2
 ```
 
-
 ## To Build A New Image
 
 Run,
@@ -39,7 +38,13 @@ This image can then be flashed to an SD card using dd or etcher.
 
 ## Publishing The Image
 
+To build a new peach image, and copy the output image and log to the releases directory, run:
+```shell
+./build.sh
+```
+
 PeachCloud images are versioned and published for release at http://releases.peachcloud.org/
+
 
 ## What's Different In This Fork?
 
