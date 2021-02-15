@@ -17,7 +17,7 @@ This script requires the latest version of vmdb2 which is not currently availabl
 After installing the above, clone the vmdb2 repository and add it to your path. 
 ```shell
 git clone https://gitlab.com/larswirzenius/vmdb2.git
-cd vmdb2; ln -s vmdb2 /usr/local/bin/vmdb2
+cd vmdb2; ln -s ${PWD}/vmdb2 /usr/local/bin/vmdb2
 ```
 
 ## To Build A New Image
