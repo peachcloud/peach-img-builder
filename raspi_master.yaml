@@ -143,7 +143,7 @@ steps:
   - chroot: /
     shell: |
       git clone -b dev https://github.com/peachcloud/peach-config.git /srv/peach-config
-      cd /srv/peach-config/ && python3 /srv/peach-config/scripts/setup_dev_env.py -i -n peach
+      cd /srv/peach-config/ && python3 /srv/peach-config/scripts/setup_dev_env.py -i -n -d peach
 
   # END OF PEACH CONFIG
 
