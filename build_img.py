@@ -29,7 +29,6 @@ def render_template(src, dest, template_vars=None):
     with open(dest, 'w') as f:
         f.write(output_text)
 
-
 # remove old files
 os.remove(os.path.join(PROJECT_PATH, 'raspi_3.img'))
 os.remove(os.path.join(PROJECT_PATH, 'raspi_3.log'))
@@ -37,13 +36,14 @@ os.remove(os.path.join(PROJECT_PATH, 'raspi_3.log'))
 # build img
 subprocess.check_call(['make', 'raspi_3.img'])
 
-# copy image and log to releases dir
+# create releases dir
 today = date.today()
 today_str = "{}{}{}".format(today.year, today.month, today.day)
 release_dir = "/var/www/releases.peachcloud.org/html/peach-imgs/{}".format(today_str)
-print("++ successful image build, copying output to {}", release_dir)
-
 os.makedirs(release_dir)
+
+# copy image and log to releases dir
+print("++ successful image build, copying output to {}", release_dir)
 img_path = os.path.join(PROJECT_PATH, 'raspi_3.img')
 log_path = os.path.join(PROJECT_PATH, 'raspi_3.log')
 release_img_name = "{}_peach_raspi3.img".format(today_str)
@@ -52,7 +52,6 @@ img_release_path = os.path.join(release_dir, release_img_name)
 log_release_path = os.path.join(release_dir, release_log_name)
 subprocess.check_call(['cp',  img_path, img_release_path])
 subprocess.check_call(['cp',  log_path, log_release_path])
-
 
 # rebuild release index.html
 release_index_path = "/var/www/releases.peachcloud.org/html/index.html"
