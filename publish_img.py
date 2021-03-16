@@ -56,8 +56,6 @@ def publish_img(release_dir):
     release_img_url = img_path.replace('/var/www/releases.peachcloud.org/html/', '/')
     with open(manifest_path, 'r') as f:
         manifest = json.loads(f.read())
-    for k, v in manifest.items():
-        print("{}: {}".format(k, v))
     packages = manifest['packages']
     render_template(
         src="release_index.html",
