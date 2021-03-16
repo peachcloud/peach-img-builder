@@ -150,12 +150,12 @@ steps:
       apt-key add /tmp/pubkey.gpg
       apt-get update
       apt-get install -y python3-peach-config
-      /usr/bin/peach-config -i -n -d peach
+      /usr/bin/peach-config setup -i -n -d peach
 
   # lastly log which versions of microservices were installed and copy the provenance to the host machine
   - chroot: /
     shell: |
-      apt list --installed | grep peach > /srv/peach-img-manifest.log
+      /usr/bin/peach-config manifest > /srv/peach-img-manifest.log
 
   - shell: |
       cp "${ROOT?}/srv/peach-img-manifest.log" /srv/peachcloud/automation/peach-img-builder/peach-img-manifest.log
