@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>PeachCloud Release Builds</title>
+<style>
+    body {
+        width: 35em;
+        margin: 0 auto;
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+    }
+</style>
+</head>
+<body>
+
+<h1>PeachCloud Image Builds</h1>
+<p>The latest PeachCloud disc image for Raspberry Pi 3+ with all PeachCloud microservices pre-installed.</p>
+<ul>
+   <li>
+	   <a href="{{release_img_url}}">{{release_img_name}}</a>
+   </li>
+</ul>
+
+<br/>
+<hr>
+<br/>
+
+<h1>PeachCloud Package Builds</h1>
+<p>The above image contains the following packages:</p>
+<ul>
+    <li><a href="http://apt.peachcloud.org/pool/buster/main/p/peach-config/python3-peach-config_{{packages['python3-peach-config']}}_all.deb">peach-config</a> - {{packages["python3-peach-config"]}}</li>
+    <li><a href="http://apt.peachcloud.org/pool/buster/main/p/peach-buttons/peach-buttons_{{packages['peach-buttons']}}_arm64.deb">peach-buttons</a> - {{packages["peach-buttons"]}}</li>
+    <li><a href="http://apt.peachcloud.org/pool/buster/main/p/peach-buttons/peach-menu_{{packages['peach-menu']}}_arm64.deb">peach-menu</a> - {{packages["peach-menu"]}}</li>
+    <li><a href="http://apt.peachcloud.org/pool/buster/main/p/peach-monitor/peach-monitor_{{packages['peach-monitor']}}_arm64.deb">peach-monitor</a> - {{packages["peach-monitor"]}}</li>
+    <li><a href="http://apt.peachcloud.org/pool/buster/main/p/peach-network/peach-network_{{packages['peach-network']}}_arm64.deb">peach-network</a> - {{packages["peach-network"]}}</li>
+    <li><a href="http://apt.peachcloud.org/pool/buster/main/p/peach-oled/peach-oled_{{packages['peach-oled']}}_arm64.deb">peach-oled</a> - {{packages["peach-oled"]}}</li>
+    <li><a href="http://apt.peachcloud.org/pool/buster/main/p/peach-stats/peach-stats_{{packages['peach-stats']}}_arm64.deb">peach-stats</a> - {{packages["peach-stats"]}}</li>
+    <li><a href="http://apt.peachcloud.org/pool/buster/main/p/peach-go-sbot/peach-go-sbot_{{packages['peach-go-sbot']}}_all.deb">peach-go-sbot</a> - {{packages["peach-go-sbot"]}}</li>
+</ul>
+
+<hr>
+
+<p>For online documentation please refer to
+<a href="http://docs.peachcloud.org/">docs.peachcloud.org</a>.<br/>
+Code repositories can be found at
+<a href="https://github.com/peachcloud">github.com/peachcloud</a>.<br/>
+Support our efforts at
+<a href="https://opencollective.com/peachcloud">opencollective.com/peachcloud</a>.</p>
+
+<p><em>Thank you for your interest in PeachCloud.</em></p>
+</body>
+</html>
