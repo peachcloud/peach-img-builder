@@ -2,9 +2,10 @@ This is a fork of the [vmdb2 script](https://salsa.debian.org/raspi-team/image-s
 which uses vmdb2 to build  a disc image for PeachCloud
 for the Raspberry pi with all configuration and peach microservices pre-installed.
 
-This vmdb2 script runs:
-`python setup_dev_env.py -i -n peach`,
-the python setup script from [peach-config](https://github.com/peachcloud/peach-config).
+This vmdb2 script creates a working Debian image, 
+adds apt.peachcloud.org as an apt source,
+and then uses peach-config to install all PeachCloud microservices.
+
 
 ## Installing vmdb2
 
