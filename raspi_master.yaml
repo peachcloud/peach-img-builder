@@ -149,8 +149,9 @@ steps:
       wget -O /tmp/pubkey.gpg http://apt.peachcloud.org/pubkey.gpg
       apt-key add /tmp/pubkey.gpg
       apt-get update
-      apt-get install -y python3-peach-config
-      /usr/bin/peach-config setup -i -n -d peach
+      apt-get install -y peach-config
+      #/usr/bin/peach-config setup -i -n -d peach
+      /usr/bin/peach-config 
 
   # lastly log which versions of microservices were installed and copy the provenance to the host machine
   - chroot: /
