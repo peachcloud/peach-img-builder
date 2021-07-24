@@ -1,4 +1,6 @@
-# See https://wiki.debian.org/RaspberryPi3 for known issues and more details.
+# NOTE: this is a special yaml which is just used for making an image for testing the peach-config testing script
+# the point is to make an image that is all ready to go, except for running peach-config
+# to allow for quick testing
 
 steps:
   - mkimg: "{{ output }}"
@@ -41,7 +43,7 @@ steps:
   - qemu-debootstrap: buster
     mirror: http://deb.debian.org/debian
     target: /
-    arch: __ARCH__
+    arch: arm64
     components:
     - main
     - contrib
@@ -56,7 +58,7 @@ steps:
       # Backports are _not_ enabled by default.
       # Enable them by uncommenting the following line:
       # deb http://deb.debian.org/debian buster-backports main contrib non-free
-      __OTHER_APT_ENABLE__
+
     unless: rootfs_unpacked
 
   - chroot: /
@@ -72,8 +74,8 @@ steps:
     - wireless-tools
     - wpasupplicant
     - raspi3-firmware
-    - __LINUX_IMAGE__
-    __EXTRA_PKGS__
+    - linux-image-arm64
+    - firmware-brcm80211
     tag: /
     unless: rootfs_unpacked
 
@@ -81,7 +83,7 @@ steps:
     unless: rootfs_unpacked
 
   - shell: |
-      echo "__HOST__-$(date +%Y%m%d)" > "${ROOT?}/etc/hostname"
+      echo "rpi3-$(date +%Y%m%d)" > "${ROOT?}/etc/hostname"
 
       # Allow root logins locally with no password
       sed -i 's,root:[^:]*:,root::,' "${ROOT?}/etc/shadow"
@@ -89,7 +91,7 @@ steps:
       install -m 644 -o root -g root rootfs/etc/fstab "${ROOT?}/etc/fstab"
 
       #not needed for peach
-      #install -m 644 -o root -g root rootfs/etc/network/interfaces.d/eth0 "${ROOT?}/etc/network/interfaces.d/eth0"
+      install -m 644 -o root -g root rootfs/etc/network/interfaces.d/eth0 "${ROOT?}/etc/network/interfaces.d/eth0"
       #install -m 600 -o root -g root rootfs/etc/network/interfaces.d/wlan0 "${ROOT?}/etc/network/interfaces.d/wlan0"
 
       install -m 755 -o root -g root rootfs/usr/local/sbin/rpi-set-sysconf "${ROOT?}/usr/local/sbin/rpi-set-sysconf"
@@ -112,7 +114,7 @@ steps:
   # Copy the relevant device tree files to the boot partition
   - chroot: /
     shell: |
-      install -m 644 -o root -g root __DTB__ /boot/firmware/
+      install -m 644 -o root -g root /usr/lib/linux-image-*-arm64/broadcom/bcm*rpi*.dtb /boot/firmware/
 
   # Clean up archive cache (likely not useful) and lists (likely outdated) to
   # reduce image size by several hundred megabytes.
@@ -130,7 +132,7 @@ steps:
 
   # BEGINNING OF PEACH CONFIG
   - shell: |
-      echo "This peach base image was configured on $(date +%Y%m%d) with peach-img-builder version 0.1.0" > "${ROOT?}/srv/peach-img-provenance.log"
+      echo "This debian/peach base image was configured as a basic image for testing peach-config on $(date +%Y%m%d) with peach-img-builder version 0.1.0" > "${ROOT?}/srv/peach-img-provenance.log"
     root-fs: /
 
   - apt: install
@@ -140,27 +142,12 @@ steps:
       - python3-pip
       - wget
       - gnupg2
+      - sudo
     tag: /
 
   - chroot: /
     shell: |
-      pip3 install setuptools
-      echo "deb http://apt.peachcloud.org/ buster main" > /etc/apt/sources.list.d/peach.list
-      wget -O /tmp/pubkey.gpg http://apt.peachcloud.org/pubkey.gpg
-      apt-key add /tmp/pubkey.gpg
-      apt-get update
-      apt-get install -y peach-config
-      RUST_LOG=info /usr/bin/peach-config setup -i -n -d
-
-  # lastly log which versions of microservices were installed and copy the provenance to the host machine
-  - chroot: /
-    shell: |
-      /usr/bin/peach-config manifest > /srv/peach-img-manifest.log
-
-  - shell: |
-      cp "${ROOT?}/srv/peach-img-manifest.log" /srv/peachcloud/automation/peach-img-builder/peach-img-manifest.log
-    root-fs: /
-
+        /usr/sbin/useradd -m -p $(echo pc | openssl passwd -1 -stdin) -g sudo -s /bin/bash peachtest
   # END OF PEACH CONFIG
 
   # TODO(https://github.com/larswirzenius/vmdb2/issues/24): remove once vmdb
