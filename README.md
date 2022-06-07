@@ -1,3 +1,7 @@
+⚠️ This repo is no longer active and has been archived. The active repo can be found at https://git.coopcloud.tech/PeachCloud/peach-img-builder ⚠️
+
+-----
+
 This is a fork of the [vmdb2 script](https://salsa.debian.org/raspi-team/image-specs/-/tree/master) for building a [debian image for raspberry pi](https://wiki.debian.org/RaspberryPi),
 which uses vmdb2 to build  a disc image for PeachCloud
 for the Raspberry pi with all configuration and peach microservices pre-installed.
